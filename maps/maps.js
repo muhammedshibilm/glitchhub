@@ -1,4 +1,6 @@
 const APIKEY = "M8OdBz6KyS2ia51SAH3Jzw1ugLXu0z6A9-ozwrU7TG8";
+
+export let data;
 var platform = new H.service.Platform({
     apikey: APIKEY
 });
@@ -227,6 +229,8 @@ calculateButton.addEventListener("click", (e) => {
     let dis=distanceCalculate();
     let fair=calculateFair(dis);
     let data=fullData(document.getElementById("search1").value,document.getElementById("search2").value,fair);
+
+
 });
 
 
@@ -279,8 +283,6 @@ function showGeoJSONData(map) {
     // Create GeoJSON reader which will download the specified file.
     // Shape of the file was obtained by using HERE Geocoding and Search API.
     // It is possible to customize look and feel of the objects.
-  
-    debugger;
     var reader = new H.data.geojson.Reader(
       "kozhikode.json",
       {
