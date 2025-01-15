@@ -30,6 +30,10 @@ input{
   width: 350px; height: 35px; padding: 5px; margin-left: 17px; 
   margin-top: 7px; border: none;
 }
+
+#search2{
+  top: 150px;
+}
 ul{
   list-style: none; background-color: white; padding: 0px;
   margin-left: 29px;
@@ -51,28 +55,57 @@ li:hover {
 #list {
   cursor: pointer;
 }
-.fa-search-custom {
+.fa-search-custom1 {
   position: absolute;
   left: 375px;
   top: 123px;
   z-index: 99999;
 }
 
+.fa-search-custom2 {
+  position: absolute;
+  left: 375px;
+  top: 173px;
+  z-index: 99999;
+}
+
+.calculate-button{
+  position: absolute;
+  top: 220px;
+  left: 37px;
+  width: 100px;
+  height: 35px;
+  background-color: #007bff;
+  color: white;
+  font-size: 18px;
+  font-family: 'Allerta', Helvetica, Arial, sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+
 </style>
+
+<script src="maps.js" defer> </script>
 
 <title>Geocoding API Demo</title>
 </head>
   <body>
 
     <div style="height: 100vh;width: 100vw;" id="mapContainer" class="container-1"></div>
-        <script src="maps.js"> </script>
         <div style="height: 100vh; width: 100vw;" id="mapContainer" class="container-1">
-            <input placeholder="Search for a Place or an Address." type="text" name="search" id="search" value="Berlin, Germany" autocomplete="off" onkeyup="autosuggest(this)" autofocus/>
-            <i class="fa fa-search fa-search-custom" aria-hidden="true"></i>
+            <input placeholder="Search for a Place or an Address." type="text" name="search" id="search1" value="origin" autocomplete="off"  autofocus/>
+            <input placeholder="Search for a Place or an Address." type="text" name="search" id="search2" value="destination" autocomplete="off"  autofocus/>
+            <i class="fa fa-search fa-search-custom1" aria-hidden="true"></i>
+            <i class="fa fa-search fa-search-custom2" aria-hidden="true"></i>
             <div class="dropdown">
             <ul id="list"></ul>
             </div>
         </div>
+    </div>
+
+    <div class="calculate">
+      <button class="calculate-button" > calculate</button>
     </div>
       
   </body>
