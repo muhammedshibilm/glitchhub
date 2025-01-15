@@ -1,41 +1,29 @@
+// URL of the API endpoint
+let origin = '11.13522,76.18566';
+let destination = '11.24801,75.83367';
+let YOUR_API_KEY = 'M8OdBz6KyS2ia51SAH3Jzw1ugLXu0z6A9-ozwrU7TG8'; 
+
+const url = `https://router.hereapi.com/v8/routes?transportMode=car&origin=${origin}&destination=${destination}&return=summary&apiKey=${YOUR_API_KEY}`;
+
+// Send GET request
+fetch(url)
+  .then(response => {
+    // Check if the response is OK (status code 200)
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    // Parse the response as JSON
+    return response.json();
+  })
+  .then(data => {
+    // Handle the parsed data
+    console.log(data['routes'][0]['sections'][0]['summary']); // This will log the JSON response
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('There was a problem with the fetch operation:', error);
+  });
 
 
 
-function calculateRouteFromAtoB(platform) {
-    var router = platform.getRoutingService(null, 8),
-        routeRequestParams = {
-          routingMode: 'fast',
-          transportMode: 'car',
-          origin: '11.13522,76.18566', // Brandenburg Gate
-          destination: '11.24801,75.83367', // Friedrichstraße Railway Station
-          return: 'polyline,turnByTurnActions,actions,instructions,travelSummary'
-        };
   
-    router.calculateRoute(
-      routeRequestParams,
-      onSuccess,
-      onError
-    );
-
-}
-
-function onSuccess(result) {
-    var route = result.routes[0];
-  
-    /*
-     * The styling of the route response on the map is entirely under the developer's control.
-     * A representative styling can be found the full JS + HTML code of this example
-     * in the functions below:
-     */
-    addRouteShapeToMap(route);
-    addManueversToMap(route);
-    addWaypointsToPanel(route);
-    addManueversToPanel(route);
-    addSummaryToPanel(route);
-    // ... etc.
-  }
-
-
-  function onError(error) {
-    alert('Can\'t reach the remote server');
-  }
