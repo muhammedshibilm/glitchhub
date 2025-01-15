@@ -7,8 +7,8 @@ var defaultLayers = platform.createDefaultLayers();
 // Step 2: initialize a map - this map is centered over Europe
 var map = new H.Map(document.getElementById('mapContainer'),
     defaultLayers.vector.normal.map, {
-    center: { lat: 50, lng: 5 },
-    zoom: 4,
+    center: { lat: 11.48920, lng: 75.74084 },
+    zoom: 10,
     pixelRatio: window.devicePixelRatio || 1
 });
 // add a resize listener to make sure that the map occupies the whole container
@@ -50,13 +50,14 @@ const autosuggest = (e, location) => {
                 document.getElementById("list").innerHTML = ``;
                 console.log('location = ', location);
                 json.items.forEach((item) => {
+
                     if (location === 'origin') {
                         if (item.position) {
-                            document.getElementById("list").innerHTML += `<li onClick="addMarkerOneToMap(${item.position.lat},${item.position.lng})">${item.title}</li>`;
+                            document.getElementById("list").innerHTML += `<li onClick="addMarkerOneToMap(${item.position.lat},${item.position.lng},'${item.title}')">${item.title}</li>`;
                         }
                     } else {
                         if (item.position) {
-                            document.getElementById("list").innerHTML += `<li onClick="addMarkerTwoToMap(${item.position.lat},${item.position.lng})">${item.title}</li>`;
+                            document.getElementById("list").innerHTML += `<li onClick="addMarkerTwoToMap(${item.position.lat},${item.position.lng},'${item.title}')">${item.title}</li>`;
                         }
                     }
                 });
@@ -214,62 +215,18 @@ function addWaypointsToPanel(route) {
     // routeInstructionsContainer.appendChild(nodeH3);
 }
 
-function addSummaryToPanel(route) {
-    let duration = 0,
-        distance = 0;
 
-    route.sections.forEach((section) => {
-        distance += section.travelSummary.length;
-        duration += section.travelSummary.duration;
-    });
 
-    // var summaryDiv = document.createElement('div'),
-    //     content = '<b>Total distance</b>: ' + distance + 'm. <br />' +
-    //         '<b>Travel Time</b>: ' + toMMSS(duration) + ' (in current traffic)';
-
-    // summaryDiv.style.fontSize = 'small';
-    // summaryDiv.style.marginLeft = '5%';
-    // summaryDiv.style.marginRight = '5%';
-    // summaryDiv.innerHTML = content;
-    // routeInstructionsContainer.appendChild(summaryDiv);
-}
-
-function addManueversToPanel(route) {
-    var nodeOL = document.createElement('ol');
-
-    nodeOL.style.fontSize = 'small';
-    nodeOL.style.marginLeft = '5%';
-    nodeOL.style.marginRight = '5%';
-    nodeOL.className = 'directions';
-
-    // route.sections.forEach((section) => {
-    //     section.actions.forEach((action, idx) => {
-    //         var li = document.createElement('li'),
-    //             spanArrow = document.createElement('span'),
-    //             spanInstruction = document.createElement('span');
-
-    //         spanArrow.className = 'arrow ' + (action.direction || '') + action.action;
-    //         spanInstruction.innerHTML = section.actions[idx].instruction;
-    //         li.appendChild(spanArrow);
-    //         li.appendChild(spanInstruction);
-
-    //         nodeOL.appendChild(li);
-    //     });
-    // });
-
-    // routeInstructionsContainer.appendChild(nodeOL);
-}
-
-function toMMSS(duration) {
-    return Math.floor(duration / 60) + ' minutes ' + (duration % 60) + ' seconds.';
-}
 
 const calculateButton = document.querySelector(".calculate-button");
 
 calculateButton.addEventListener("click", (e) => {
     e.preventDefault();
     calculateRouteFromAtoB(originCoordinates, destinationCoordinates, platform);
-    distanceCalculate();
+
+    let dis=distanceCalculate();
+    let fair=calculateFair(dis);
+    let data=fullData(document.getElementById("search1").value,document.getElementById("search2").value,fair);
 });
 
 
@@ -277,7 +234,7 @@ calculateButton.addEventListener("click", (e) => {
 
 function distanceCalculate(){
     console.log('maps.js loaded');
-const url = `https://router.hereapi.com/v8/routes?transportMode=car&origin=${originCoordinates}&destination=${destinationCoordinates}&return=summary&apiKey=${APIKEY}`;
+const url = `https://router.hereapi.com/v8/routes?transportMode=bus&origin=${originCoordinates}&destination=${destinationCoordinates}&return=summary&apiKey=${APIKEY}`;
 
 // Send GET request
 fetch(url)
@@ -303,5 +260,51 @@ fetch(url)
   return data['routes'][0]['sections'][0]['summary']['length']/1000;
 
 }
+
+
+function calculateFair(distance){
+    return (distance-2)*2 + 10;
+}
+
+function fullData(origin,destination,fair){
+    return {
+        origin: origin,
+        destination: destination,
+        fair: fair
+    }
+}
+
+
+function showGeoJSONData(map) {
+    // Create GeoJSON reader which will download the specified file.
+    // Shape of the file was obtained by using HERE Geocoding and Search API.
+    // It is possible to customize look and feel of the objects.
+  
+    debugger;
+    var reader = new H.data.geojson.Reader(
+      "kozhikode.json",
+      {
+        // This function is called each time parser detects a new map object
+        style: function (mapObject) {
+          // Parsed geo objects could be styled using setStyle method
+          if (mapObject instanceof H.map.Polygon) {
+            mapObject.setStyle({
+              fillColor: "rgba(255, 0, 0, 0.5)",
+              strokeColor: "rgba(0, 0, 255, 0.2)",
+              lineWidth: 3,
+            });
+          }
+        },
+      }
+    );
+  
+    // Start parsing the file
+    reader.parse();
+  
+    // Add layer which shows GeoJSON data on the map
+    map.addLayer(reader.getLayer());
+  }
+
+    showGeoJSONData(map);   
 
 

@@ -9,11 +9,19 @@
 <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-data.js"></script>
 <!--HERE JS libs-->
 <!-- style sheet -->
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- end of style sheet -->
 <style>
+
+  body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Allerta', Helvetica, Arial, sans-serif;
+    background-color: #190019;
+  } 
  .dropdown {
   position: absolute;
   z-index: 99999;
@@ -26,9 +34,10 @@
 input{
   z-index: 9999; font-size: 18px;
   font-family: 'Allerta', Helvetica, Arial, sans-serif;
-  color: #495057;position: absolute; top: 100px; left: 20px; 
+  color: #ffffff;position: absolute; top: 100px; left: 20px; 
   width: 350px; height: 35px; padding: 5px; margin-left: 17px; 
   margin-top: 7px; border: none;
+  background-color: #190019;
 }
 
 #search2{
@@ -75,7 +84,7 @@ li:hover {
   left: 37px;
   width: 100px;
   height: 35px;
-  background-color: #007bff;
+  background-color: #44cc00;
   color: white;
   font-size: 18px;
   font-family: 'Allerta', Helvetica, Arial, sans-serif;
@@ -94,8 +103,8 @@ li:hover {
 
     <div style="height: 100vh;width: 100vw;" id="mapContainer" class="container-1"></div>
     <div style="height: 100vh; width: 100vw;">
-        <input placeholder="Search for a Place or an Address." type="text" name="search" id="search1" value="origin" autocomplete="off"  autofocus/>
-        <input placeholder="Search for a Place or an Address." type="text" name="search" id="search2" value="destination" autocomplete="off"  autofocus/>
+        <input placeholder="Origin" type="text" name="search" id="search1"  autocomplete="off"  autofocus/>
+        <input placeholder="Destination" type="text" name="search" id="search2"  autocomplete="off"  autofocus/>
         <i class="fa fa-search fa-search-custom1" aria-hidden="true"></i>
         <i class="fa fa-search fa-search-custom2" aria-hidden="true"></i>
         <div class="dropdown">
