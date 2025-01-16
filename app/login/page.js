@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-
+import Image from "next/image";
+import { CircleArrowLeft, RotateCcwSquare } from "lucide-react";
 export default function Page() {
   const [form, setForm] = useState({ phoneNumber: "", password: "" });
   const router = useRouter();
@@ -61,7 +62,8 @@ export default function Page() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-[#44cc00] text-black h-screen flex flex-col justify-around">
+    <>
+    <form onSubmit={handleSubmit} className="bg-[#44cc00] text-black h-screen flex flex-col justify-around md:hidden">
       <div className="flex flex-col px-5 space-y-10">
         <h1 className="text-5xl font-extrabold relative">
           Welcome <br /> Back!
@@ -92,5 +94,13 @@ export default function Page() {
         </p>
       </div>
     </form>
+    <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+    </>
   );
 }

@@ -4,6 +4,8 @@ import Link from "next/link";
 import BottomNavbar from "../../components/Navbar";
 import { useState } from "react";
 import { toast, Toaster } from "sonner"; // Import toast and Toaster
+import Image from "next/image";
+import { CircleArrowLeft, RotateCcwSquare } from "lucide-react";
 
 export default function Page() {
   // State to store the input value
@@ -40,7 +42,8 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center pt-16 px-4">
+    <>
+    <div className="flex flex-col justify-center items-center pt-16 px-4 md:hidden">
       <button
         onClick={handleFunction} // Handle the click event
         className="w-full h-36 bg-gray-600 rounded-md text-center flex justify-center items-center"
@@ -65,5 +68,15 @@ export default function Page() {
         Redeem Credit
       </button>
     </div>
+  
+
+    <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+    </>
   );
 }

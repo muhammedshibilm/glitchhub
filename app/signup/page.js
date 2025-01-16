@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Image from "next/image";
+import { CircleArrowLeft, RotateCcwSquare } from "lucide-react";
 
 export default function Page() {
   const [form, setForm] = useState({
@@ -34,7 +36,8 @@ export default function Page() {
     }
   };
   return (
-    <form onSubmit={handlesubmit} className="flex flex-col space-y-2 mt-4 ">
+    <>
+    <form onSubmit={handlesubmit} className="flex flex-col space-y-2 mt-4 md:hidden">
       <div className="bg-[#44cc00] text-black h-screen flex flex-col justify-around ">
         <div className="flex flex-col px-5 space-y-10">
           <h1 className="text-5xl font-extrabold relative ">
@@ -75,5 +78,13 @@ export default function Page() {
         </div>
       </div>
     </form>
+    <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+  </>
   );
 }

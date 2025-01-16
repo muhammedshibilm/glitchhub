@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="overflow-y-scroll ">
+      <div className="overflow-y-scroll block md:hidden ">
         <div className=" top-0 flex justify-between items-center w-full ">
           <Image src={logo} alt="logo" className="w-28 h-28" />
           <BellRingIcon className="relative right-5" size={32} />
@@ -45,6 +45,14 @@ export default function Home() {
         </Link>
       </div>
       <BottomNavbar />
+
+      <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
     </>
   );
 }

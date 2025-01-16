@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { CircleArrowLeft, RotateCcwSquare } from "lucide-react";
+
 
 export default function Page() {
   const [isMounted, setIsMounted] = useState(false);
@@ -56,7 +58,9 @@ export default function Page() {
   };
 
   return (
-    <form onSubmit={formHandler}>
+    <>
+      <div>
+      <form onSubmit={formHandler}>
       <div className="flex flex-col h-screen">
         <ArrowLeftCircleIcon
           size={40}
@@ -106,5 +110,14 @@ export default function Page() {
         </div>
       </div>
     </form>
+      </div>
+      <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+    </>
   );
 }

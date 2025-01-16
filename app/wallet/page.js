@@ -47,7 +47,8 @@ export default function Page() {
   }
 
   return (
-    <div className="overflow-y-scroll">
+    <>
+    <div className="overflow-y-scroll block md:hidden ">
       {/* Scrollable Content */}
       <div className="flex-1">
         {/* Wallet Balance Section */}
@@ -101,6 +102,22 @@ export default function Page() {
       <div className="fixed bottom-0 w-full">
         <BottomNavbar />
       </div>
+
+      <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
     </div>
+    <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+    </>
   );
 }

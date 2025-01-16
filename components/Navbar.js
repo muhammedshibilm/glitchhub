@@ -21,7 +21,7 @@ export default function BottomNavbar() {
   if (!isMounted) return null; 
   
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-100 rounded-t-xl  flex justify-around p-4">
+    <div className="fixed bottom-0 left-0 right-0 bg-gray-100 rounded-t-xl  flex justify-around p-4 md:hidden">
       <Link href="/" className={` bg-black p-4 rounded-full  ${getActiveClass('/')}`}>
         
           <FaHome size={24} />

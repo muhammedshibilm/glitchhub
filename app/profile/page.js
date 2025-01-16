@@ -5,6 +5,9 @@ import { LogOut, UserPenIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import checkAuth from "../../lib/auth";
+import { CircleArrowLeft, RotateCcwSquare } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Page() {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
@@ -50,7 +53,8 @@ export default function Page() {
 
 
   return (
-    <div className="h-screen flex flex-col space-y-20 items-center">
+    <>
+    <div className="h-screen flex flex-col space-y-20 items-center  md:hidden">
       <div className="flex justify-center items-center flex-col">
       <div className=" w-full mt-16 flex justify-end relative -right-20 mb-5">
       <LogOut color="red" size={35}  onClick={logout}/>
@@ -77,5 +81,13 @@ export default function Page() {
 
       <BottomNavbar />
     </div>
+    <div className="h-screen hidden text-6xl font-bold   md:block">
+         <div className="h-screen flex justify-center items-center">
+         <p>
+               This site will not work in Desktop mode <br></br> Kindly access through a Phone
+         </p>
+         </div>
+      </div>
+    </>
   );
 }
