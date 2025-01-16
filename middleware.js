@@ -46,11 +46,10 @@ export const config = {
   matcher: [
     "/login/:path*",
     "/signup",
-    "/login/forgotpassword/:path*",
-    "/chat/:path*",
-    "/document-upload/:path*",
-    "/doctor-contact/:path*",
-    "/profile/:path*", // Add more routes if necessary
+    "/",
+    "/map",
+    "/wallet",
+    "/profile/:path*", 
     "/recharge/:path*"
   ],
 };
