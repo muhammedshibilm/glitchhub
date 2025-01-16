@@ -1,6 +1,5 @@
 const APIKEY = "M8OdBz6KyS2ia51SAH3Jzw1ugLXu0z6A9-ozwrU7TG8";
 
-export let data;
 var platform = new H.service.Platform({
     apikey: APIKEY
 });
@@ -225,21 +224,7 @@ const calculateButton = document.querySelector(".calculate-button");
 calculateButton.addEventListener("click", (e) => {
     e.preventDefault();
     calculateRouteFromAtoB(originCoordinates, destinationCoordinates, platform);
-
-    let dis=distanceCalculate();
-    let fair=calculateFair(dis);
-    let data=fullData(document.getElementById("search1").value,document.getElementById("search2").value,fair);
-    const queryString = new URLSearchParams(data).toString();
-
-// Create the final URL with query parameters
-const baseUrl = "https://localhost:30000/api/map/router";
-const fullUrl = `${baseUrl}?${queryString}`;
-
-console.log(fullUrl);
-// Output: "https://example.com?name=Alice&age=25"
-
-// Send the user to the URL
-window.location.href = fullUrl;
+    -distanceCalculate(); 
 
 
 });
@@ -252,6 +237,8 @@ function distanceCalculate(){
 const url = `https://router.hereapi.com/v8/routes?transportMode=bus&origin=${originCoordinates}&destination=${destinationCoordinates}&return=summary&apiKey=${APIKEY}`;
 
 // Send GET request
+
+let dd=0;
 fetch(url)
   .then(response => {
     // Check if the response is OK (status code 200)
@@ -263,30 +250,37 @@ fetch(url)
   })
   .then(data => {
     // Handle the parsed data
-    console.log(data['routes'][0]['sections'][0]['summary']); // This will log the JSON response
+    console.log(data['routes'][0]['sections'][0]['summary']);
+    dd=data['routes'][0]['sections'][0]['summary']['length']/1000;
+    fullData(dd) // This will log the JSON response
   })
   .catch(error => {
     // Handle any errors that occurred during the fetch
     console.error('There was a problem with the fetch operation:', error);
   });
 
-  console.log('maps.js loaded');
+  console.log(dd,'distance outside');
 
-  return data['routes'][0]['sections'][0]['summary']['length']/1000;
+  return dd;
 
 }
 
 
 function calculateFair(distance){
-    return (distance-2)*2 + 10;
+    return (distance-2) + 10;
 }
 
-function fullData(origin,destination,fair){
-    return {
-        origin: origin,
-        destination: destination,
+function fullData(distance){
+    let fair = calculateFair(distance);
+    data =  {
+        origin: document.getElementById("search1").value,
+        destination: document.getElementById("search2").value,
         fair: fair
     }
+
+    console.log(data,'final data');
+
+    alert(`The distance between ${data.origin} and ${data.destination} is ${distance} km and the fair is ${data.fair} rupees`);
 }
 
 
