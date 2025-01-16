@@ -12,3 +12,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model User {
+  id          Int      @id @default(autoincrement()) // Primary key
+  name        String
+  phoneNumber String   @unique
+  password    String
+  createdAt   DateTime @default(now()) // Timestamp
+  updatedAt   DateTime @updatedAt     // Automatically updates on record modification
+}
+
+
+model Wallet {
+  id          Int      @id @default(autoincrement())
+  phoneNumber String   @unique
+  balance     Float    @default(0)                 
+}
