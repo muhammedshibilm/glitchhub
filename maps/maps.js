@@ -229,6 +229,17 @@ calculateButton.addEventListener("click", (e) => {
     let dis=distanceCalculate();
     let fair=calculateFair(dis);
     let data=fullData(document.getElementById("search1").value,document.getElementById("search2").value,fair);
+    const queryString = new URLSearchParams(data).toString();
+
+// Create the final URL with query parameters
+const baseUrl = "https://localhost:30000/api/map/router";
+const fullUrl = `${baseUrl}?${queryString}`;
+
+console.log(fullUrl);
+// Output: "https://example.com?name=Alice&age=25"
+
+// Send the user to the URL
+window.location.href = fullUrl;
 
 
 });
