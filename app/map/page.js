@@ -1,40 +1,46 @@
 "use client";
+
 import Link from "next/link";
 import BottomNavbar from "../../components/Navbar";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken"; // Import jwt to decode the token
+import { useState } from "react";
+import { toast, Toaster } from "sonner"; // Import toast and Toaster
 
 export default function Page() {
+  // State to store the input value
+  const [fairAmount, setFairAmount] = useState("");
+
   // Function to handle extracting phoneNumber from the token and modifying the URL
   function handleFunction() {
-    const authToken = Cookies.get("authToken");
-
-    if (authToken) {
-      try {
-        // Decode the token to extract the phoneNumber
-        const decoded = jwt.decode(authToken); // Decode without verifying, since we just need the payload
-        const phoneNumber = decoded?.phoneNumber;
-
-        if (phoneNumber) {
-          // Create the URL with phoneNumber as a query param
-          const url = `http://127.0.0.1:5500/test.html`;
-          console.log(url); // Log the full URL for debugging (optional)
-          
-          // Redirect the user to the constructed URL
-          window.location.href = url;
-        } else {
-          console.error("Phone number not found in the token");
-        }
-      } catch (error) {
-        console.error("Failed to decode token:", error);
-      }
-    } else {
-      console.error("Auth token not found");
-    }
+    const url = `http://127.0.0.1:5500/test.html`;
+    console.log(url); // Log the full URL for debugging (optional)
+    window.location.href = url; // Redirect the user to the constructed URL
   }
 
+  // Function to handle form submission and send the POST request using fetch
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/maprouter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fairAmount: fairAmount }), // Send the fairAmount in the request body
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success("Credit redeemed successfully!");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } catch (error) {
+      toast.error("Error sending the request!");
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center pt-16 px-4">
+    <div className="flex flex-col justify-center items-center pt-16 px-4">
       <button
         onClick={handleFunction} // Handle the click event
         className="w-full h-36 bg-gray-600 rounded-md text-center flex justify-center items-center"
@@ -42,6 +48,22 @@ export default function Page() {
         <p className="text-white font-bold">Click here</p>
       </button>
       <BottomNavbar />
+      {/* Toaster for displaying messages */}
+      <Toaster position="top-right" duration={5000} />
+
+      {/* Input field to enter the fair amount */}
+      <input
+        className="p-4 mt-10 rounded-md bg-gray-200"
+        placeholder="Enter the fair amount in rupees"
+        value={fairAmount}
+        onChange={(e) => setFairAmount(e.target.value)} // Update the state on input change
+      />
+      <button
+        onClick={handleSubmit} // Trigger the handleSubmit function on button click
+        className="p-5 bg-green-600 text-white mt-16 rounded-md"
+      >
+        Redeem Credit
+      </button>
     </div>
   );
 }
